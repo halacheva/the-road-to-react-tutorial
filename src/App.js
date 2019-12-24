@@ -127,9 +127,10 @@ function App() {
     };
 
     render() {
+      const { list, dev, searchTerm } = this.state;
       return (
         <div>
-          <h2>Hello, {this.state.dev.getName()}!</h2>
+          <h2>Hello, {dev.getName()}!</h2>
           <form>
             <label htmlFor="input[type=text]">Search:</label>
             <input type="text" onChange={this.onSearchChange} />
@@ -147,28 +148,26 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {this.state.list
-                .filter(searchFor(this.state.searchTerm))
-                .map((item, index) => (
-                  <tr key={item.objectID}>
-                    <td>{index}</td>
-                    <td>{item.objectID}</td>
-                    <td>
-                      <a href={item.url}>{item.title}</a>
-                    </td>
-                    <td>{item.author}</td>
-                    <td>{item.num_comments}</td>
-                    <td>{item.points}</td>
-                    <td>
-                      <button
-                        onClick={() => this.onDismiss(item.objectID)}
-                        type="button"
-                      >
-                        Dismiss
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+              {list.filter(searchFor(searchTerm)).map((item, index) => (
+                <tr key={item.objectID}>
+                  <td>{index}</td>
+                  <td>{item.objectID}</td>
+                  <td>
+                    <a href={item.url}>{item.title}</a>
+                  </td>
+                  <td>{item.author}</td>
+                  <td>{item.num_comments}</td>
+                  <td>{item.points}</td>
+                  <td>
+                    <button
+                      onClick={() => this.onDismiss(item.objectID)}
+                      type="button"
+                    >
+                      Dismiss
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

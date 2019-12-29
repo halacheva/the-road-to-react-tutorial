@@ -44,29 +44,6 @@ function App() {
   const searchFor = searchTerm => item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-  function ListAsAFunction(props) {
-    const [list, setList] = useState(props.list);
-    const [searchTerm, setSearchTerm] = useState("");
-
-    function onDismiss(objectID) {
-      const newList = list.filter(item => item.objectID !== objectID);
-      setList(newList);
-    }
-
-    function onSearchChange(event) {
-      setSearchTerm(event.target.value);
-    }
-
-    return (
-      <div>
-        <h2>Hello, {props.dev.getName()}!</h2>
-        <h3>The current time is {new Date().toTimeString()}</h3>
-        <Search value={searchTerm} onChange={onSearchChange} />
-        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
-      </div>
-    );
-  }
-
   function Search(props) {
     const { value, onChange } = props;
 
@@ -122,6 +99,29 @@ function App() {
           </tbody>
         </table>
         <p> TABLE: the current time is {new Date().toTimeString()}</p>
+      </div>
+    );
+  }
+
+  function ListAsAFunction(props) {
+    const [list, setList] = useState(props.list);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    function onDismiss(objectID) {
+      const newList = list.filter(item => item.objectID !== objectID);
+      setList(newList);
+    }
+
+    function onSearchChange(event) {
+      setSearchTerm(event.target.value);
+    }
+
+    return (
+      <div>
+        <h2>Hello, {props.dev.getName()}!</h2>
+        <h3>The current time is {new Date().toTimeString()}</h3>
+        <Search value={searchTerm} onChange={onSearchChange} />
+        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
       </div>
     );
   }

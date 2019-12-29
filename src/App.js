@@ -44,6 +44,16 @@ function App() {
   const searchFor = searchTerm => item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
+  function Button(props) {
+    const { onClick, className = "", children } = props;
+
+    return (
+      <button onClick={onClick} className={className} type="button">
+        {children}
+      </button>
+    );
+  }
+
   function Search(props) {
     const { value, onChange, children } = props;
 
@@ -87,12 +97,9 @@ function App() {
                 <td>{item.num_comments}</td>
                 <td>{item.points}</td>
                 <td>
-                  <button
-                    onClick={() => onDismiss(item.objectID)}
-                    type="button"
-                  >
-                    Dismiss
-                  </button>
+                  <Button onClick={() => onDismiss(item.objectID)}>
+                    Dissmiss
+                  </Button>
                 </td>
               </tr>
             ))}

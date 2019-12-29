@@ -45,12 +45,12 @@ function App() {
     item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
   function Search(props) {
-    const { value, onChange } = props;
+    const { value, onChange, children } = props;
 
     return (
       <div>
         <form>
-          <label htmlFor="input[type=text]">Search:</label>
+          <label htmlFor="input[type=text]">{children}</label>
           <input type="text" value={value} onChange={onChange} />
         </form>
         <p> SEARCH: the current time is {new Date().toTimeString()}</p>
@@ -120,7 +120,9 @@ function App() {
       <div>
         <h2>Hello, {props.dev.getName()}!</h2>
         <h3>The current time is {new Date().toTimeString()}</h3>
-        <Search value={searchTerm} onChange={onSearchChange} />
+        <Search value={searchTerm} onChange={onSearchChange}>
+          Search (in function):
+        </Search>
         <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
       </div>
     );
@@ -154,7 +156,10 @@ function App() {
         <div>
           <h2>Hello, {dev.getName()}!</h2>
           <p>APP: the current time is {new Date().toTimeString()}</p>
-          <Search value={searchTerm} onChange={this.onSearchChange} />
+          <Search value={searchTerm} onChange={this.onSearchChange}>
+            Search (in class):
+          </Search>
+          >
           <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
         </div>
       );

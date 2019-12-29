@@ -36,14 +36,13 @@ function App() {
   const devFunction = new Developer("Mimka", "Functional Component");
   const devClass = new Developer("Mimka", "Class Component");
 
-  const searchFor = searchTerm => item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase());
-
   // function searchFor(searchTerm) {
   //   return function(item) {
   //     return item.title.toLowerCase().includes(searchTerm.toLowerCase());
   //   };
   // }
+  const searchFor = searchTerm => item =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
   function ListAsAFunction(props) {
     const [list, setList] = useState(props.list);
@@ -61,6 +60,7 @@ function App() {
     return (
       <div>
         <h2>Hello, {props.dev.getName()}!</h2>
+        <h3>The current time is {new Date().toTimeString()}</h3>
         <form>
           <label htmlFor="input[type=text]">Search:</label>
           <input type="text" onChange={onSearchChange} />
@@ -131,6 +131,7 @@ function App() {
       return (
         <div>
           <h2>Hello, {dev.getName()}!</h2>
+          <h3>The current time is {new Date().toTimeString()}</h3>
           <form>
             <label htmlFor="input[type=text]">Search:</label>
             <input type="text" onChange={this.onSearchChange} />

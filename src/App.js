@@ -50,8 +50,8 @@ function App() {
     </button>
   );
 
-  const Search = ({ value, onChange, children }) => (
-    <div>
+  const Search = ({ value, onChange, className, children }) => (
+    <div className={className}>
       <form>
         <label htmlFor="input[type=text]">{children}</label>
         <input type="text" value={value} onChange={onChange} />
@@ -110,13 +110,13 @@ function App() {
     const onSearchChange = event => setSearchTerm(event.target.value);
 
     return (
-      <div>
+      <div className="app">
         <h2>Hello, {dev.getName()}!</h2>
         <h3>The current time is {new Date().toTimeString()}</h3>
-        <Search value={searchTerm} onChange={onSearchChange}>
+        <Search value={searchTerm} onChange={onSearchChange} className="search">
           Search (in function):
         </Search>
-        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} /> }
+        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
       </div>
     );
   };
@@ -149,10 +149,13 @@ function App() {
         <div>
           <h2>Hello, {dev.getName()}!</h2>
           <p>APP: the current time is {new Date().toTimeString()}</p>
-          <Search value={searchTerm} onChange={this.onSearchChange}>
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}
+            className="search"
+          >
             Search (in class):
           </Search>
-          >
           <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
         </div>
       );
@@ -160,7 +163,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="page">
       <ListAsAFunction listProp={list} dev={devFunction} />
       <br />
       <ListAsClass />

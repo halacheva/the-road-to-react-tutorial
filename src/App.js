@@ -61,47 +61,72 @@ function App() {
       <div>
         <h2>Hello, {props.dev.getName()}!</h2>
         <h3>The current time is {new Date().toTimeString()}</h3>
-        <form>
-          <label htmlFor="input[type=text]">Search:</label>
-          <input type="text" value={searchTerm} onChange={onSearchChange} />
-        </form>
-        <table>
-          <thead>
-            <tr>
-              <th>Index</th>
-              <th>Object ID</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th># Comments</th>
-              <th>Points</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.filter(searchFor(searchTerm)).map((item, index) => (
-              <tr key={item.objectID}>
-                <td>{index}</td>
-                <td>{item.objectID}</td>
-                <td>
-                  <a href={item.url}>{item.title}</a>
-                </td>
-                <td>{item.author}</td>
-                <td>{item.num_comments}</td>
-                <td>{item.points}</td>
-                <td>
-                  <button
-                    onClick={() => onDismiss(item.objectID)}
-                    type="button"
-                  >
-                    Dismiss
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Search value={searchTerm} onChange={onSearchChange} />
+        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
       </div>
     );
+  }
+
+  class Search extends Component {
+    render() {
+      const { value, onChange } = this.props;
+      return (
+        <div>
+          <form>
+            <label htmlFor="input[type=text]">Search:</label>
+            <input type="text" value={value} onChange={onChange} />
+          </form>
+          <p> SEARCH: the current time is {new Date().toTimeString()}</p>
+        </div>
+      );
+    }
+  }
+
+  class Table extends Component {
+    render() {
+      const { list, pattern, onDismiss } = this.props;
+
+      return (
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Index</th>
+                <th>Object ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th># Comments</th>
+                <th>Points</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.filter(searchFor(pattern)).map((item, index) => (
+                <tr key={item.objectID}>
+                  <td>{index}</td>
+                  <td>{item.objectID}</td>
+                  <td>
+                    <a href={item.url}>{item.title}</a>
+                  </td>
+                  <td>{item.author}</td>
+                  <td>{item.num_comments}</td>
+                  <td>{item.points}</td>
+                  <td>
+                    <button
+                      onClick={() => onDismiss(item.objectID)}
+                      type="button"
+                    >
+                      Dismiss
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p> TABLE: the current time is {new Date().toTimeString()}</p>
+        </div>
+      );
+    }
   }
 
   class ListAsClass extends Component {
@@ -131,50 +156,9 @@ function App() {
       return (
         <div>
           <h2>Hello, {dev.getName()}!</h2>
-          <h3>The current time is {new Date().toTimeString()}</h3>
-          <form>
-            <label htmlFor="input[type=text]">Search:</label>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={this.onSearchChange}
-            />
-          </form>
-          <table>
-            <thead>
-              <tr>
-                <th>Index</th>
-                <th>Object ID</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th># Comments</th>
-                <th>Points</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {list.filter(searchFor(searchTerm)).map((item, index) => (
-                <tr key={item.objectID}>
-                  <td>{index}</td>
-                  <td>{item.objectID}</td>
-                  <td>
-                    <a href={item.url}>{item.title}</a>
-                  </td>
-                  <td>{item.author}</td>
-                  <td>{item.num_comments}</td>
-                  <td>{item.points}</td>
-                  <td>
-                    <button
-                      onClick={() => this.onDismiss(item.objectID)}
-                      type="button"
-                    >
-                      Dismiss
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <p>APP: the current time is {new Date().toTimeString()}</p>
+          <Search value={searchTerm} onChange={this.onSearchChange} />
+          <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
         </div>
       );
     }

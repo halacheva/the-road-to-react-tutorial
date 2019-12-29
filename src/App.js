@@ -44,96 +44,82 @@ function App() {
   const searchFor = searchTerm => item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-  function Button(props) {
-    const { onClick, className = "", children } = props;
+  const Button = ({ onClick, className = "", children }) => (
+    <button onClick={onClick} className={className} type="button">
+      {children}
+    </button>
+  );
 
-    return (
-      <button onClick={onClick} className={className} type="button">
-        {children}
-      </button>
-    );
-  }
+  const Search = ({ value, onChange, children }) => (
+    <div>
+      <form>
+        <label htmlFor="input[type=text]">{children}</label>
+        <input type="text" value={value} onChange={onChange} />
+      </form>
+      <p> SEARCH: the current time is {new Date().toTimeString()}</p>
+    </div>
+  );
 
-  function Search(props) {
-    const { value, onChange, children } = props;
-
-    return (
-      <div>
-        <form>
-          <label htmlFor="input[type=text]">{children}</label>
-          <input type="text" value={value} onChange={onChange} />
-        </form>
-        <p> SEARCH: the current time is {new Date().toTimeString()}</p>
-      </div>
-    );
-  }
-
-  function Table(props) {
-    const { list, pattern, onDismiss } = props;
-
-    return (
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Index</th>
-              <th>Object ID</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th># Comments</th>
-              <th>Points</th>
-              <th>Action</th>
+  const Table = ({ list, pattern, onDismiss }) => (
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Object ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th># Comments</th>
+            <th>Points</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.filter(searchFor(pattern)).map((item, index) => (
+            <tr key={item.objectID}>
+              <td>{index}</td>
+              <td>{item.objectID}</td>
+              <td>
+                <a href={item.url}>{item.title}</a>
+              </td>
+              <td>{item.author}</td>
+              <td>{item.num_comments}</td>
+              <td>{item.points}</td>
+              <td>
+                <Button onClick={() => onDismiss(item.objectID)}>
+                  Dissmiss
+                </Button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {list.filter(searchFor(pattern)).map((item, index) => (
-              <tr key={item.objectID}>
-                <td>{index}</td>
-                <td>{item.objectID}</td>
-                <td>
-                  <a href={item.url}>{item.title}</a>
-                </td>
-                <td>{item.author}</td>
-                <td>{item.num_comments}</td>
-                <td>{item.points}</td>
-                <td>
-                  <Button onClick={() => onDismiss(item.objectID)}>
-                    Dissmiss
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p> TABLE: the current time is {new Date().toTimeString()}</p>
-      </div>
-    );
-  }
+          ))}
+        </tbody>
+      </table>
+      <p> TABLE: the current time is {new Date().toTimeString()}</p>
+    </div>
+  );
 
-  function ListAsAFunction(props) {
-    const [list, setList] = useState(props.list);
+  const ListAsAFunction = ({ listProp, dev }) => {
+    const [list, setList] = useState(listProp);
     const [searchTerm, setSearchTerm] = useState("");
 
-    function onDismiss(objectID) {
+    const onDismiss = objectID => {
       const newList = list.filter(item => item.objectID !== objectID);
-      setList(newList);
-    }
+      return setList(newList);
+    };
 
-    function onSearchChange(event) {
-      setSearchTerm(event.target.value);
-    }
+    const onSearchChange = event => setSearchTerm(event.target.value);
 
     return (
       <div>
-        <h2>Hello, {props.dev.getName()}!</h2>
+        <h2>Hello, {dev.getName()}!</h2>
         <h3>The current time is {new Date().toTimeString()}</h3>
         <Search value={searchTerm} onChange={onSearchChange}>
           Search (in function):
         </Search>
-        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
+        <Table list={list} pattern={searchTerm} onDismiss={onDismiss} /> }
       </div>
     );
-  }
+  };
 
   class ListAsClass extends Component {
     constructor(props) {
@@ -175,7 +161,7 @@ function App() {
 
   return (
     <div className="App">
-      <ListAsAFunction list={list} dev={devFunction} />
+      <ListAsAFunction listProp={list} dev={devFunction} />
       <br />
       <ListAsClass />
     </div>

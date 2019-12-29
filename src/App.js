@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { Component, useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 
@@ -63,7 +63,7 @@ function App() {
         <h3>The current time is {new Date().toTimeString()}</h3>
         <form>
           <label htmlFor="input[type=text]">Search:</label>
-          <input type="text" onChange={onSearchChange} />
+          <input type="text" value={searchTerm} onChange={onSearchChange} />
         </form>
         <table>
           <thead>
@@ -134,7 +134,11 @@ function App() {
           <h3>The current time is {new Date().toTimeString()}</h3>
           <form>
             <label htmlFor="input[type=text]">Search:</label>
-            <input type="text" onChange={this.onSearchChange} />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={this.onSearchChange}
+            />
           </form>
           <table>
             <thead>

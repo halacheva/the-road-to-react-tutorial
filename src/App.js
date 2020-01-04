@@ -3,6 +3,11 @@ import React, { Component, useState } from "react";
 import "./App.css";
 
 function App() {
+  const DEFALUT_QUERY = "redux";
+  const PATH_BASE = "https://hn.algolia.com/api/v1";
+  const PATH_SEARCH = "/search?";
+  const PARAM_SEARCH = "query=";
+
   const list = [
     {
       title: "React",
@@ -42,7 +47,9 @@ function App() {
   //   };
   // }
   const searchFor = searchTerm => item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase());
+    item.title
+      ? item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      : item;
 
   const Button = ({ onClick, className = "", children }) => (
     <button onClick={onClick} className={className} type="button">
@@ -50,11 +57,14 @@ function App() {
     </button>
   );
 
-  const Search = ({ value, onChange, className, children }) => (
+  const Search = ({ value, onChange, onSubmit, className, children }) => (
     <div className={className}>
-      <form>
+      <form onSubmit={onSubmit}>
         <label htmlFor="input[type=text]">{children}</label>
         <input type="text" value={value} onChange={onChange} />
+        <button type="submit" onClick={onSubmit}>
+          Submit
+        </button>
       </form>
       <p> SEARCH: the current time is {new Date().toTimeString()}</p>
     </div>
@@ -113,7 +123,12 @@ function App() {
       <div className="app">
         <h2>Hello, {dev.getName()}!</h2>
         <h3>The current time is {new Date().toTimeString()}</h3>
-        <Search value={searchTerm} onChange={onSearchChange} className="search">
+        <Search
+          value={searchTerm}
+          onChange={onSearchChange}
+          onSubmit={null}
+          className="search"
+        >
           Search (in function):
         </Search>
         <Table list={list} pattern={searchTerm} onDismiss={onDismiss} />
@@ -126,25 +141,50 @@ function App() {
       super(props);
 
       this.state = {
-        list,
+        result: null,
         dev: devClass,
-        searchTerm: ""
+        searchTerm: DEFALUT_QUERY
       };
     }
 
+    setSearchTopStories = result => {
+      this.setState({ result });
+    };
+
     onDismiss = objectID => {
-      const newList = this.state.list.filter(
+      const updatedHits = this.state.result.hits.filter(
         item => item.objectID !== objectID
       );
-      this.setState({ list: newList });
+      this.setState({ result: { ...this.state.result, hits: updatedHits } });
     };
 
     onSearchChange = event => {
       this.setState({ searchTerm: event.target.value });
     };
 
+    onSearchSubmit = event => {
+      const { searchTerm } = this.state;
+      this.fetchSearchTopStories(searchTerm);
+      event.preventDefault();
+    };
+
+    componentDidMount() {
+      const { searchTerm } = this.state;
+      this.fetchSearchTopStories(searchTerm);
+    }
+
+    fetchSearchTopStories = searchTerm => {
+      const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(result => this.setSearchTopStories(result))
+        .catch(error => error);
+    };
+
     render() {
-      const { list, dev, searchTerm } = this.state;
+      const { result, dev, searchTerm } = this.state;
+
       return (
         <div>
           <h2>Hello, {dev.getName()}!</h2>
@@ -152,11 +192,18 @@ function App() {
           <Search
             value={searchTerm}
             onChange={this.onSearchChange}
+            onSubmit={this.onSearchSubmit}
             className="search"
           >
             Search (in class):
           </Search>
-          <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
+          {result && (
+            <Table
+              list={result.hits}
+              pattern={searchTerm}
+              onDismiss={this.onDismiss}
+            />
+          )}
         </div>
       );
     }

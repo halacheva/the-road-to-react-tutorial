@@ -61,6 +61,7 @@ button:hover {
 
 table {
   margin: 20px 0;
+  table-layout: fixed;
 }
 
 table th {
@@ -71,9 +72,10 @@ table th {
 }
 
 table td {
-  white-space: nowrap;
-  margin: 10px 0;
-  padding: 2px;
   background: #1fddff;
   border: 1px solid #e3e3e3;
+  margin: 10px 0;
+  max-width: 300px;
+  overflow: hidden;
+  padding: 2px;
 }

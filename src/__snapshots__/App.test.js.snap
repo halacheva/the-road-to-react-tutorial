@@ -211,6 +211,7 @@ exports[`App has a valid snapshot 1`] = `
 exports[`Button has a valid snapshot 1`] = `
 <button
   className=""
+  onClick={[Function]}
   type="button"
 >
   More
@@ -226,7 +227,9 @@ exports[`Search has a valid snapshot 1`] = `
       Search
     </label>
     <input
+      onChange={[Function]}
       type="text"
+      value=""
     />
     <button
       type="submit"

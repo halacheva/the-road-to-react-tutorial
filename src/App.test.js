@@ -22,28 +22,37 @@ describe("App", () => {
 });
 
 describe("Search", () => {
+  const props = {
+    value: "",
+    onChange: () => {}
+  };
+
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Search>Search</Search>, div);
+    ReactDOM.render(<Search {...props}>Search</Search>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   it("has a valid snapshot", () => {
-    const component = renderer.create(<Search>Search</Search>);
+    const component = renderer.create(<Search {...props}>Search</Search>);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
 
 describe("Button", () => {
+  const props = {
+    onClick: () => {}
+  };
+
   it("renders without crashing", () => {
     const div = document.createElement("div");
-    ReactDOM.render(<Button>More</Button>, div);
+    ReactDOM.render(<Button {...props}>More</Button>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   it("has a valid snapshot", () => {
-    const component = renderer.create(<Button>More</Button>);
+    const component = renderer.create(<Button {...props}>More</Button>);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
@@ -69,7 +78,8 @@ describe("Table", () => {
         objectID: 2
       }
     ],
-    pattern: ""
+    pattern: "",
+    onDismiss: () => {}
   };
 
   it("renders without crashing", () => {

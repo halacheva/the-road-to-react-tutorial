@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
-// import logo from "./logo.svg";
 import "./App.css";
+import PropTypes from "prop-types";
 
 function App() {
   const DEFALUT_QUERY = "redux";
@@ -195,6 +195,12 @@ const Button = ({ onClick, className = "", children }) => (
   </button>
 );
 
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired
+};
+
 const Search = ({ value, onChange, onSubmit, className, children }) => (
   <div className={className}>
     <form onSubmit={onSubmit}>
@@ -206,6 +212,14 @@ const Search = ({ value, onChange, onSubmit, className, children }) => (
     </form>
   </div>
 );
+
+Search.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired
+};
 
 const Table = ({ list, pattern, onDismiss }) => (
   <div>
@@ -241,6 +255,12 @@ const Table = ({ list, pattern, onDismiss }) => (
     </table>
   </div>
 );
+
+Table.propTypes = {
+  list: PropTypes.array.isRequired,
+  pattern: PropTypes.string.isRequired,
+  onDismiss: PropTypes.func.isRequired
+};
 
 export default App;
 export { Button, Search, Table };

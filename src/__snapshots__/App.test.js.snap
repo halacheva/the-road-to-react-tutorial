@@ -1,0 +1,338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App has a valid snapshot 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="app"
+  >
+    <h2>
+      Hello, 
+      Mimka Functional Component
+      !
+    </h2>
+    <div
+      className="search"
+    >
+      <form
+        onSubmit={null}
+      >
+        <label
+          htmlFor="input[type=text]"
+        >
+          Search (in function):
+        </label>
+        <input
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+        <button
+          onClick={null}
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Index
+            </th>
+            <th>
+              Object ID
+            </th>
+            <th>
+              Title
+            </th>
+            <th>
+              Author
+            </th>
+            <th>
+              # Comments
+            </th>
+            <th>
+              Points
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              0
+            </td>
+            <td>
+              0
+            </td>
+            <td>
+              <a
+                href="https://reactjs.org/"
+              >
+                React
+              </a>
+            </td>
+            <td>
+              Jordan Walke
+            </td>
+            <td>
+              3
+            </td>
+            <td>
+              4
+            </td>
+            <td>
+              <button
+                className=""
+                onClick={[Function]}
+                type="button"
+              >
+                Dissmiss
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              1
+            </td>
+            <td>
+              <a
+                href="https://redux.js.org"
+              >
+                Redux
+              </a>
+            </td>
+            <td>
+              Dan Abramov, Andrew Clark
+            </td>
+            <td>
+              2
+            </td>
+            <td>
+              5
+            </td>
+            <td>
+              <button
+                className=""
+                onClick={[Function]}
+                type="button"
+              >
+                Dissmiss
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br />
+  <div>
+    <h2>
+      Hello, 
+      Mimka Class Component
+      !
+    </h2>
+    <div
+      className="search"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <label
+          htmlFor="input[type=text]"
+        >
+          Search (in class):
+        </label>
+        <input
+          onChange={[Function]}
+          type="text"
+          value="redux"
+        />
+        <button
+          onClick={[Function]}
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Index
+            </th>
+            <th>
+              Object ID
+            </th>
+            <th>
+              Title
+            </th>
+            <th>
+              Author
+            </th>
+            <th>
+              # Comments
+            </th>
+            <th>
+              Points
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+    <div>
+      <button
+        className=""
+        onClick={[Function]}
+        type="button"
+      >
+        More
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Button has a valid snapshot 1`] = `
+<button
+  className=""
+  type="button"
+>
+  More
+</button>
+`;
+
+exports[`Search has a valid snapshot 1`] = `
+<div>
+  <form>
+    <label
+      htmlFor="input[type=text]"
+    >
+      Search
+    </label>
+    <input
+      type="text"
+    />
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+`;
+
+exports[`Table has a valid snapshot 1`] = `
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Index
+        </th>
+        <th>
+          Object ID
+        </th>
+        <th>
+          Title
+        </th>
+        <th>
+          Author
+        </th>
+        <th>
+          # Comments
+        </th>
+        <th>
+          Points
+        </th>
+        <th>
+          Action
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          0
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          <a
+            href="1"
+          >
+            1
+          </a>
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          <button
+            className=""
+            onClick={[Function]}
+            type="button"
+          >
+            Dissmiss
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          1
+        </td>
+        <td>
+          2
+        </td>
+        <td>
+          <a
+            href="2"
+          >
+            2
+          </a>
+        </td>
+        <td>
+          2
+        </td>
+        <td>
+          2
+        </td>
+        <td>
+          2
+        </td>
+        <td>
+          <button
+            className=""
+            onClick={[Function]}
+            type="button"
+          >
+            Dissmiss
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

@@ -64,7 +64,6 @@ function App() {
     return (
       <div className="app">
         <h2>Hello, {dev.getName()}!</h2>
-        <h3>The current time is {new Date().toTimeString()}</h3>
         <Search
           value={searchTerm}
           onChange={onSearchChange}
@@ -155,7 +154,6 @@ function App() {
       return (
         <div>
           <h2>Hello, {dev.getName()}!</h2>
-          <p>APP: the current time is {new Date().toTimeString()}</p>
           <Search
             value={searchTerm}
             onChange={this.onSearchChange}
@@ -206,7 +204,6 @@ const Search = ({ value, onChange, onSubmit, className, children }) => (
         Submit
       </button>
     </form>
-    <p> SEARCH: the current time is {new Date().toTimeString()}</p>
   </div>
 );
 
@@ -242,7 +239,6 @@ const Table = ({ list, pattern, onDismiss }) => (
         ))}
       </tbody>
     </table>
-    <p> TABLE: the current time is {new Date().toTimeString()}</p>
   </div>
 );
 

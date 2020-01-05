@@ -1,9 +1,82 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import renderer from "react-test-renderer";
+import App, { Search, Button, Table } from "./App";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("App", () => {
+  it("renders without crashing", () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<App />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it("has a valid snapshot", () => {
+    const component = renderer.create(<App />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe("Search", () => {
+  it("renders without crashing", () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<Search>Search</Search>, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it("has a valid snapshot", () => {
+    const component = renderer.create(<Search>Search</Search>);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe("Button", () => {
+  it("renders without crashing", () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<Button>More</Button>, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it("has a valid snapshot", () => {
+    const component = renderer.create(<Button>More</Button>);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe("Table", () => {
+  const props = {
+    list: [
+      {
+        title: "1",
+        url: "1",
+        author: "1",
+        num_comments: 1,
+        points: 1,
+        objectID: 1
+      },
+      {
+        title: "2",
+        url: "2",
+        author: "2",
+        num_comments: 2,
+        points: 2,
+        objectID: 2
+      }
+    ],
+    pattern: ""
+  };
+
+  it("renders without crashing", () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<Table {...props} />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it("has a valid snapshot", () => {
+    const component = renderer.create(<Table {...props} />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });

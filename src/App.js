@@ -145,27 +145,33 @@ function App() {
       super(props);
 
       this.state = {
-        result: null,
+        results: null,
         dev: devClass,
+        searchKey: "",
         searchTerm: DEFALUT_QUERY
       };
     }
 
     setSearchTopStories = result => {
       const { hits, page } = result;
-      const oldHits = page !== 0 ? this.state.result.hits : [];
+      const { searchKey, results } = this.state;
+      const oldHits =
+        results && results[searchKey] ? this.state.results[searchKey].hits : [];
       const updatedHits = [...oldHits, ...hits];
 
       this.setState({
-        result: { ...this.state.result, hits: updatedHits, page: page }
+        results: { ...results, [searchKey]: { hits: updatedHits, page: page } }
       });
     };
 
     onDismiss = objectID => {
-      const updatedHits = this.state.result.hits.filter(
+      const { searchKey, results } = this.state;
+      const updatedHits = results[searchKey].hits.filter(
         item => item.objectID !== objectID
       );
-      this.setState({ result: { ...this.state.result, hits: updatedHits } });
+      this.setState({
+        results: { ...results, [searchKey]: { hits: updatedHits } }
+      });
     };
 
     onSearchChange = event => {
@@ -174,12 +180,16 @@ function App() {
 
     onSearchSubmit = event => {
       const { searchTerm } = this.state;
-      this.fetchSearchTopStories(searchTerm);
+      this.setState({ searchKey: searchTerm });
+      if (!this.state.results[searchTerm]) {
+        this.fetchSearchTopStories(searchTerm);
+      }
       event.preventDefault();
     };
 
     componentDidMount() {
       const { searchTerm } = this.state;
+      this.setState({ searchKey: searchTerm });
       this.fetchSearchTopStories(searchTerm);
     }
 
@@ -193,8 +203,11 @@ function App() {
     };
 
     render() {
-      const { result, dev, searchTerm } = this.state;
-      const page = (result && result.page) || 0;
+      const { results, dev, searchKey, searchTerm } = this.state;
+      const page =
+        (results && results[searchKey] && results[searchKey].page) || 0;
+      const list =
+        (results && results[searchKey] && results[searchKey].hits) || [];
 
       return (
         <div>
@@ -208,16 +221,10 @@ function App() {
           >
             Search (in class):
           </Search>
-          {result && (
-            <Table
-              list={result.hits}
-              pattern={searchTerm}
-              onDismiss={this.onDismiss}
-            />
-          )}
+          <Table list={list} pattern={searchTerm} onDismiss={this.onDismiss} />
           <div>
             <Button
-              onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
+              onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
             >
               More
             </Button>

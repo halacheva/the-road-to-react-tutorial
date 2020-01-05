@@ -50,68 +50,6 @@ function App() {
   //     return item.title.toLowerCase().includes(searchTerm.toLowerCase());
   //   };
   // }
-  const searchFor = searchTerm => item =>
-    item.title
-      ? item.title.toLowerCase().includes(searchTerm.toLowerCase())
-      : item;
-
-  const Button = ({ onClick, className = "", children }) => (
-    <button onClick={onClick} className={className} type="button">
-      {children}
-    </button>
-  );
-
-  const Search = ({ value, onChange, onSubmit, className, children }) => (
-    <div className={className}>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="input[type=text]">{children}</label>
-        <input type="text" value={value} onChange={onChange} />
-        <button type="submit" onClick={onSubmit}>
-          Submit
-        </button>
-      </form>
-      <p> SEARCH: the current time is {new Date().toTimeString()}</p>
-    </div>
-  );
-
-  const Table = ({ list, pattern, onDismiss }) => (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Index</th>
-            <th>Object ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th># Comments</th>
-            <th>Points</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {list.filter(searchFor(pattern)).map((item, index) => (
-            <tr key={item.objectID}>
-              <td>{index}</td>
-              <td>{item.objectID}</td>
-              <td>
-                <a href={item.url}>{item.title}</a>
-              </td>
-              <td>{item.author}</td>
-              <td>{item.num_comments}</td>
-              <td>{item.points}</td>
-              <td>
-                <Button onClick={() => onDismiss(item.objectID)}>
-                  Dissmiss
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p> TABLE: the current time is {new Date().toTimeString()}</p>
-    </div>
-  );
-
   const ListAsAFunction = ({ listProp, dev }) => {
     const [list, setList] = useState(listProp);
     const [searchTerm, setSearchTerm] = useState("");
@@ -248,4 +186,65 @@ function App() {
   );
 }
 
+const searchFor = searchTerm => item =>
+  item.title
+    ? item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    : item;
+
+const Button = ({ onClick, className = "", children }) => (
+  <button onClick={onClick} className={className} type="button">
+    {children}
+  </button>
+);
+
+const Search = ({ value, onChange, onSubmit, className, children }) => (
+  <div className={className}>
+    <form onSubmit={onSubmit}>
+      <label htmlFor="input[type=text]">{children}</label>
+      <input type="text" value={value} onChange={onChange} />
+      <button type="submit" onClick={onSubmit}>
+        Submit
+      </button>
+    </form>
+    <p> SEARCH: the current time is {new Date().toTimeString()}</p>
+  </div>
+);
+
+const Table = ({ list, pattern, onDismiss }) => (
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Object ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th># Comments</th>
+          <th>Points</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {list.filter(searchFor(pattern)).map((item, index) => (
+          <tr key={item.objectID}>
+            <td>{index}</td>
+            <td>{item.objectID}</td>
+            <td>
+              <a href={item.url}>{item.title}</a>
+            </td>
+            <td>{item.author}</td>
+            <td>{item.num_comments}</td>
+            <td>{item.points}</td>
+            <td>
+              <Button onClick={() => onDismiss(item.objectID)}>Dissmiss</Button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p> TABLE: the current time is {new Date().toTimeString()}</p>
+  </div>
+);
+
 export default App;
+export { Button, Search, Table };

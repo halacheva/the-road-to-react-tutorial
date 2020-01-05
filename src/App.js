@@ -148,7 +148,8 @@ function App() {
         results: null,
         dev: devClass,
         searchKey: "",
-        searchTerm: DEFALUT_QUERY
+        searchTerm: DEFALUT_QUERY,
+        error: null
       };
     }
 
@@ -199,15 +200,19 @@ function App() {
       fetch(url)
         .then(response => response.json())
         .then(result => this.setSearchTopStories(result))
-        .catch(error => error);
+        .catch(error => this.setState({ error }));
     };
 
     render() {
-      const { results, dev, searchKey, searchTerm } = this.state;
+      const { results, dev, searchKey, searchTerm, error } = this.state;
       const page =
         (results && results[searchKey] && results[searchKey].page) || 0;
       const list =
         (results && results[searchKey] && results[searchKey].hits) || [];
+
+      if (error) {
+        return <p>Something went wrong: {error.message}</p>;
+      }
 
       return (
         <div>

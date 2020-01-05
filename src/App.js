@@ -4,9 +4,13 @@ import "./App.css";
 
 function App() {
   const DEFALUT_QUERY = "redux";
+  const DEFAULT_PER_PAGE = 10;
+
   const PATH_BASE = "https://hn.algolia.com/api/v1";
-  const PATH_SEARCH = "/search?";
+  const PATH_SEARCH = "/search";
   const PARAM_SEARCH = "query=";
+  const PARAM_PAGE = "page=";
+  const PARAM_PER_PAGE = "hitsPerPage=";
 
   const list = [
     {
@@ -148,7 +152,13 @@ function App() {
     }
 
     setSearchTopStories = result => {
-      this.setState({ result });
+      const { hits, page } = result;
+      const oldHits = page !== 0 ? this.state.result.hits : [];
+      const updatedHits = [...oldHits, ...hits];
+
+      this.setState({
+        result: { ...this.state.result, hits: updatedHits, page: page }
+      });
     };
 
     onDismiss = objectID => {
@@ -173,8 +183,8 @@ function App() {
       this.fetchSearchTopStories(searchTerm);
     }
 
-    fetchSearchTopStories = searchTerm => {
-      const url = `${PATH_BASE}${PATH_SEARCH}${PARAM_SEARCH}${searchTerm}`;
+    fetchSearchTopStories = (searchTerm, page = 0) => {
+      const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_PER_PAGE}${DEFAULT_PER_PAGE}`;
 
       fetch(url)
         .then(response => response.json())
@@ -184,6 +194,7 @@ function App() {
 
     render() {
       const { result, dev, searchTerm } = this.state;
+      const page = (result && result.page) || 0;
 
       return (
         <div>
@@ -204,6 +215,13 @@ function App() {
               onDismiss={this.onDismiss}
             />
           )}
+          <div>
+            <Button
+              onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
+            >
+              More
+            </Button>
+          </div>
         </div>
       );
     }
